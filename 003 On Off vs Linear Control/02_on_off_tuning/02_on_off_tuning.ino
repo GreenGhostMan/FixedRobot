@@ -23,37 +23,39 @@ volatile bool LeftEncoderBSet;
 volatile long Right_Encoder_Ticks = 0;
 volatile bool RightEncoderBSet;
 /*-----------------------------------------------------------------------*/
-int count_1;
+//int count_1;
+int count_1 = Right_Encoder_Ticks;
 int count_2;
 int diff;
 int target1 = 165;
-int traget2 = 330;
+int target2 = 330;
 
 void setup() {
   setup_motor_driver();
   Serial.begin(9600);  
-  Serial.println("pwm     | rpm:");
-  RightMotor->setSpeed(50);
+  Serial.println("ppr");
+  
   RightMotor->run(FORWARD);
+  Serial.println(Right_Encoder_Ticks);
 }
 
-void loop() {
+void loop() { 
   
-  count_1 = Right_Encoder_Ticks;
-  int timer_;
+  int timer_ = 0;
   while(timer_<5000)
   {
+    RightMotor->setSpeed(30);
     count_2 = Right_Encoder_Ticks;
     diff = count_2 - count_1;
-    if( diff<target_count-20 )      {/* pwm and forward direction */ RightMotor->run(FORWARD);}
-    else if ( diff>target_count-20 ){/* pwm and backward direction */RightMotor->run(BACKWARD);}
-    else                            { /* stop the motor */RightMotor->run(RELEASE);}
+    if( diff<target2-5 )      {/* pwm and forward direction */ RightMotor->run(FORWARD);}
+    else if ( diff>target2+5 )   {/* pwm and backward direction */RightMotor->run(BACKWARD);}
+    else                       { /* stop the motor */RightMotor->run(RELEASE);}
     
-    delay(1);
+    delay(10);
     Serial.println(diff);
-    timer_++;
+    timer_ += 10;
   }
-  
+  Serial.println(diff);
   
   
   
