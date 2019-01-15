@@ -27,7 +27,7 @@ volatile bool RightEncoderBSet;
 int count_1 = Right_Encoder_Ticks;
 int count_2;
 int Error;
-float Kp = 1.2;
+float Kp = 0.535;
 int Speed;
 int target = 1000;
 
@@ -41,7 +41,7 @@ int timer_ = 0;
 
 void loop() { 
   
-  delay(9000);
+  delay(5000);
   while(timer_<2000)
   {
     count_2 = Right_Encoder_Ticks;
